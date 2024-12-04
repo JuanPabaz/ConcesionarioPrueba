@@ -13,4 +13,6 @@ public interface IOrdenService {
 
     OrdenDTO crearOrden(Orden orden) throws BadCreateRequest, ObjectNotFoundException;
 
+    OrdenDTO actualizarOrden(Long id, Orden orden) throws ObjectNotFoundException;
+
 }

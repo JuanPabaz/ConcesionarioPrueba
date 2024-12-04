@@ -54,4 +54,15 @@ public class OrdenServiceImpl implements IOrdenService{
         return mapOrden.mapOrden(ordenRepository.save(orden));
     }
 
+    @Override
+    public OrdenDTO actualizarOrden(Long id,Orden orden) throws ObjectNotFoundException {
+        Optional<Orden> ordenExistente = ordenRepository.findById(id);
+        if (ordenExistente.isEmpty()) {
+            throw new ObjectNotFoundException("Orden no encontrada");
+        }
+
+        orden.setId(id);
+        return mapOrden.mapOrden(ordenRepository.save(orden));
+    }
+
 }
