@@ -1,10 +1,12 @@
 package com.pruebatecnica.concesionario.controllers;
 
 import com.pruebatecnica.concesionario.dto.OrdenDTO;
+import com.pruebatecnica.concesionario.entities.Orden;
+import com.pruebatecnica.concesionario.exceptions.BadCreateRequest;
 import com.pruebatecnica.concesionario.service.IOrdenService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +23,11 @@ public class OrdenController {
     @GetMapping
     public List<OrdenDTO> listarOrdenes(){
         return ordenService.listarOrdenes();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> crearOrden(@RequestBody Orden orden) throws BadCreateRequest {
+        return ResponseEntity.ok(ordenService.crearOrden(orden));
+
     }
 }
