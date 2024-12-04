@@ -5,6 +5,7 @@ import com.pruebatecnica.concesionario.dto.VehiculoDTO;
 import com.pruebatecnica.concesionario.entities.Orden;
 import com.pruebatecnica.concesionario.entities.Vehiculo;
 import com.pruebatecnica.concesionario.exceptions.BadCreateRequest;
+import com.pruebatecnica.concesionario.exceptions.ObjectNotFoundException;
 import com.pruebatecnica.concesionario.maps.IMapOrden;
 import com.pruebatecnica.concesionario.repositories.OrdenRepository;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,10 @@ public class OrdenServiceImpl implements IOrdenService{
     }
 
     @Override
-    public OrdenDTO crearOrden(Orden orden) throws BadCreateRequest {
+    public OrdenDTO crearOrden(Orden orden) throws BadCreateRequest, ObjectNotFoundException {
         Vehiculo vehiculo = vehiculoService.buscarVehiculoPorId(orden.getVehiculo().getId());
         if (vehiculo == null) {
-            throw new BadCreateRequest("El vehiculo no existe");
+            throw new ObjectNotFoundException("El vehiculo no existe");
         }
 
         Optional<List<Orden>> optionalOrdenActivaList = ordenRepository.encontrarPorIdVehiculoYOrdenActiva(vehiculo.getId());
@@ -52,4 +53,5 @@ public class OrdenServiceImpl implements IOrdenService{
 
         return mapOrden.mapOrden(ordenRepository.save(orden));
     }
+
 }
