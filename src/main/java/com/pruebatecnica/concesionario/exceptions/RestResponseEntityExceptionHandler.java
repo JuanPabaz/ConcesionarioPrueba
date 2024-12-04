@@ -13,6 +13,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(BadCreateRequest.class)
     public ResponseEntity<Object> handleBadCreateRequest(BadCreateRequest exception) {
         ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST, exception.getMessage());
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<ErrorMessage> objectNotFoundException(ObjectNotFoundException exception){
+        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 }
