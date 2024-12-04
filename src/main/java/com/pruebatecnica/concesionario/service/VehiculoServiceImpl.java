@@ -2,6 +2,8 @@ package com.pruebatecnica.concesionario.service;
 
 import com.pruebatecnica.concesionario.dto.VehiculoDTO;
 import com.pruebatecnica.concesionario.entities.Vehiculo;
+import com.pruebatecnica.concesionario.exceptions.BadCreateRequest;
+import com.pruebatecnica.concesionario.exceptions.ObjectNotFoundException;
 import com.pruebatecnica.concesionario.maps.IMapVehiculo;
 import com.pruebatecnica.concesionario.repositories.VehiculoRepository;
 import org.springframework.stereotype.Service;
@@ -32,4 +34,14 @@ public class VehiculoServiceImpl implements IVehiculoService {
         Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findById(id);
         return vehiculoOptional.orElse(null);
     }
+
+    @Override
+    public VehiculoDTO crearVehiculo(Vehiculo vehiculo) {
+        Optional<Vehiculo> vehiculoPorPlacaOptional = vehiculoRepository.findByPlaca(vehiculo.getPlaca());
+        if (vehiculoPorPlacaOptional.isPresent()) {
+            throw new BadCreateRequest("Ya existe un vehiculo con esta placa");
+        }
+        return mapVehiculo.mapVehiculo(vehiculoRepository.save(vehiculo));
+    }
+
 }
