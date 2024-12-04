@@ -5,7 +5,6 @@ import com.pruebatecnica.concesionario.entities.Orden;
 import com.pruebatecnica.concesionario.exceptions.BadCreateRequest;
 import com.pruebatecnica.concesionario.exceptions.ObjectNotFoundException;
 import com.pruebatecnica.concesionario.service.IOrdenService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +28,15 @@ public class OrdenController {
     @PostMapping
     public ResponseEntity<?> crearOrden(@RequestBody Orden orden) throws BadCreateRequest, ObjectNotFoundException {
         return ResponseEntity.ok(ordenService.crearOrden(orden));
+    }
 
+    @PutMapping("/{id_orden}")
+    public ResponseEntity<?> actualizarOrden(@PathVariable Long id_orden, @RequestBody Orden orden) throws BadCreateRequest, ObjectNotFoundException {
+        return ResponseEntity.ok(ordenService.actualizarOrden(id_orden, orden));
+    }
+
+    @DeleteMapping("/{id_orden}")
+    public ResponseEntity<?> eliminarOrden(@PathVariable Long id_orden) throws ObjectNotFoundException {
+        return ResponseEntity.ok(ordenService.eliminarOrden(id_orden));
     }
 }
