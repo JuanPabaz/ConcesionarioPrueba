@@ -4,7 +4,6 @@ import com.pruebatecnica.concesionario.entities.RefreshToken;
 import com.pruebatecnica.concesionario.exceptions.ExpiredRefreshTokenException;
 import com.pruebatecnica.concesionario.repositories.RefreshTokenRepository;
 import com.pruebatecnica.concesionario.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
