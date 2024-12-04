@@ -1,5 +1,6 @@
 package com.pruebatecnica.concesionario.dto;
 
+import com.pruebatecnica.concesionario.enums.TipoOrden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class OrdenDTO {
 
     private LocalDate fechaOrden;
 
-    private String tipo;
+    private TipoOrden tipo;
 
     private Boolean activa;
 

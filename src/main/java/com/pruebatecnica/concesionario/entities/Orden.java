@@ -1,6 +1,7 @@
 package com.pruebatecnica.concesionario.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.pruebatecnica.concesionario.enums.TipoOrden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +31,8 @@ public class Orden {
     private LocalDate fechaOrden;
 
     @Column(nullable = false)
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoOrden tipo;
 
     @Column(nullable = false)
     private Boolean activa;
