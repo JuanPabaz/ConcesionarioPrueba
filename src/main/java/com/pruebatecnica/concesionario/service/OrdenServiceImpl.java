@@ -65,4 +65,19 @@ public class OrdenServiceImpl implements IOrdenService{
         return mapOrden.mapOrden(ordenRepository.save(orden));
     }
 
+    @Override
+    public boolean eliminarOrden(Long id) throws ObjectNotFoundException {
+        Optional<Orden> ordenOptional = ordenRepository.findById(id);
+        if (ordenOptional.isEmpty()) {
+            throw new ObjectNotFoundException("Orden no encontrada");
+        }
+
+        Orden orden = ordenOptional.get();
+        if (orden.getActiva()){
+            throw new BadCreateRequest("No se puede eliminar una orden activa");
+        }
+        ordenRepository.deleteById(id);
+        return true;
+    }
+
 }

@@ -15,4 +15,6 @@ public interface IOrdenService {
 
     OrdenDTO actualizarOrden(Long id, Orden orden) throws ObjectNotFoundException;
 
+    boolean eliminarOrden(Long id) throws ObjectNotFoundException;
+
 }
