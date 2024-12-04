@@ -1,5 +1,6 @@
 package com.pruebatecnica.concesionario.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Vehiculo {
     private String modelo;
 
     @OneToMany(targetEntity = Orden.class,mappedBy = "vehiculo", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Orden> ordenes;
 
 }

@@ -1,5 +1,6 @@
 package com.pruebatecnica.concesionario.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Orden {
 
     @ManyToOne
     @JoinColumn(name = "vehiculo_id", nullable = false)
+    @JsonBackReference
     private Vehiculo vehiculo;
 
     @Column(nullable = false)
