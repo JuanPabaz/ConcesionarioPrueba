@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orden")
+@CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"})
 public class OrdenController {
 
     private final IOrdenService ordenService;

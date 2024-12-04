@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"})
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

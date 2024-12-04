@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vehiculo")
+@CrossOrigin(origins = "*", allowedHeaders = {"Authorization", "Content-Type"})
 public class VehiculoController {
 
     private final IVehiculoService vehiculoService;
