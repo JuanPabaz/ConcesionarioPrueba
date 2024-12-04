@@ -25,11 +25,14 @@ public class JwtServiceImpl {
     @Value("${application.security.jwt.secret-key}")
     private String SECRET;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Value("${application.security.jwt.access-token-expiration}")
     private long accessTokenExpire;
+
+    public JwtServiceImpl(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);

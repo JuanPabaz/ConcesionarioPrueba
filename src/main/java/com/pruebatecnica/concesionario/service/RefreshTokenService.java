@@ -15,14 +15,17 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Value("${application.security.jwt.refresh-token-expiration}")
     private long refreshTokenExpire;
+
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UsuarioRepository usuarioRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public RefreshToken createRefreshToken(String username){
         RefreshToken refreshToken = RefreshToken.builder()
