@@ -14,4 +14,5 @@ public interface IVehiculoService {
 
     VehiculoDTO crearVehiculo(Vehiculo vehiculo);
 
+    VehiculoDTO actualizarVehiculo(Long id,Vehiculo vehiculo) throws ObjectNotFoundException;
 }

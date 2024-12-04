@@ -44,4 +44,14 @@ public class VehiculoServiceImpl implements IVehiculoService {
         return mapVehiculo.mapVehiculo(vehiculoRepository.save(vehiculo));
     }
 
+    @Override
+    public VehiculoDTO actualizarVehiculo(Long id,Vehiculo vehiculo) throws ObjectNotFoundException {
+        Optional<Vehiculo> vehiculoExistente = vehiculoRepository.findById(id);
+        if (vehiculoExistente.isEmpty()) {
+            throw new ObjectNotFoundException("Vehículo no encontrado");
+        }
+        vehiculo.setId(id);
+        return mapVehiculo.mapVehiculo(vehiculoRepository.save(vehiculo));
+    }
+
 }
