@@ -1,8 +1,6 @@
 package com.pruebatecnica.concesionario.maps;
 
-import com.pruebatecnica.concesionario.dto.OrdenDTO;
 import com.pruebatecnica.concesionario.dto.VehiculoDTO;
-import com.pruebatecnica.concesionario.entities.Orden;
 import com.pruebatecnica.concesionario.entities.Vehiculo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
