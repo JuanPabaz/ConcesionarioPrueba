@@ -1,7 +1,6 @@
 package com.pruebatecnica.concesionario.service;
 
 import com.pruebatecnica.concesionario.dto.OrdenDTO;
-import com.pruebatecnica.concesionario.dto.VehiculoDTO;
 import com.pruebatecnica.concesionario.entities.Orden;
 import com.pruebatecnica.concesionario.entities.Vehiculo;
 import com.pruebatecnica.concesionario.exceptions.BadCreateRequest;
