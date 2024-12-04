@@ -54,4 +54,21 @@ public class VehiculoServiceImpl implements IVehiculoService {
         return mapVehiculo.mapVehiculo(vehiculoRepository.save(vehiculo));
     }
 
+    @Override
+    public boolean eliminarVehiculo(Long id) throws ObjectNotFoundException {
+        Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findById(id);
+        if (vehiculoOptional.isEmpty()) {
+            throw new ObjectNotFoundException("Vehículo no encontrado");
+        }
+
+        Vehiculo vehiculo = vehiculoOptional.get();
+        Optional<Vehiculo> vehiculoPorPlacaOptional = vehiculoRepository.findByPlaca(vehiculo.getPlaca());
+        if (vehiculoPorPlacaOptional.isPresent()) {
+            throw new BadCreateRequest("No se puede eliminar un vehiculo con una orden activa");
+        }
+
+        vehiculoRepository.deleteById(id);
+        return true;
+    }
+
 }
