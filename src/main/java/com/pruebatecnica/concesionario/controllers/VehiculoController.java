@@ -2,10 +2,10 @@ package com.pruebatecnica.concesionario.controllers;
 
 import com.pruebatecnica.concesionario.dto.VehiculoDTO;
 
+import com.pruebatecnica.concesionario.entities.Vehiculo;
 import com.pruebatecnica.concesionario.service.IVehiculoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +22,10 @@ public class VehiculoController {
     @GetMapping("")
     public List<VehiculoDTO> ListarVehiculos() {
         return vehiculoService.listarVehiculos();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> crearVehiculo(@RequestBody Vehiculo vehiculo) {
+        return ResponseEntity.ok(vehiculoService.crearVehiculo(vehiculo));
     }
 }
