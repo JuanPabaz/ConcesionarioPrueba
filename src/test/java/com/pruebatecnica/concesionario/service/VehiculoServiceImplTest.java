@@ -111,4 +111,24 @@ class VehiculoServiceImplTest {
         assertThrows(ObjectNotFoundException.class, () -> vehiculoService.actualizarVehiculo(1L, vehiculo));
         verify(vehiculoRepository).findById(1L);
     }
+
+    @Test
+    void actualizarVehiculo_debeActualizarVehiculoSiExiste() throws ObjectNotFoundException {
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setPlaca("ABC123");
+        Vehiculo existingVehiculo = new Vehiculo();
+        Vehiculo updatedVehiculo = new Vehiculo();
+        VehiculoDTO vehiculoDTO = new VehiculoDTO();
+
+        when(vehiculoRepository.findById(1L)).thenReturn(Optional.of(existingVehiculo));
+        when(vehiculoRepository.save(vehiculo)).thenReturn(updatedVehiculo);
+        when(mapVehiculo.mapVehiculo(updatedVehiculo)).thenReturn(vehiculoDTO);
+
+        VehiculoDTO result = vehiculoService.actualizarVehiculo(1L, vehiculo);
+
+        assertEquals(vehiculoDTO, result);
+        verify(vehiculoRepository).findById(1L);
+        verify(vehiculoRepository).save(vehiculo);
+        verify(mapVehiculo).mapVehiculo(updatedVehiculo);
+    }
 }
