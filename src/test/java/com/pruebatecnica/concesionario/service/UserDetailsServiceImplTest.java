@@ -49,4 +49,16 @@ class UserDetailsServiceImplTest {
         verify(usuarioRepository).findByUsername(username);
     }
 
+    @Test
+    void loadUserByUsername_debeLanzarExcepcionSiUsuarioNoExiste() {
+        // Arrange
+        String username = "unknownuser";
+
+        when(usuarioRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername(username));
+        verify(usuarioRepository).findByUsername(username);
+    }
+
 }
