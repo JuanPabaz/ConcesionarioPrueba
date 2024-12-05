@@ -131,4 +131,12 @@ class VehiculoServiceImplTest {
         verify(vehiculoRepository).save(vehiculo);
         verify(mapVehiculo).mapVehiculo(updatedVehiculo);
     }
+
+    @Test
+    void eliminarVehiculo_debeLanzarExcepcionSiVehiculoNoExiste() {
+        when(vehiculoRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ObjectNotFoundException.class, () -> vehiculoService.eliminarVehiculo(1L));
+        verify(vehiculoRepository).findById(1L);
+    }
 }
