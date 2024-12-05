@@ -107,4 +107,14 @@ class RefreshTokenServiceTest {
         assertEquals(refreshToken, result);
     }
 
+    @Test
+    void verifyExpiration_debeLanzarExcepcionSiTokenEstaVencido() {
+        // Arrange
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setExpiryDate(Instant.now().minusMillis(10000));
+
+        // Act & Assert
+        assertThrows(ExpiredRefreshTokenException.class, () -> refreshTokenService.verifyExpiration(refreshToken));
+        verify(refreshTokenRepository).delete(refreshToken);
+    }
 }
