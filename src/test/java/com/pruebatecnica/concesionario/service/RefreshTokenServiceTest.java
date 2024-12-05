@@ -117,4 +117,21 @@ class RefreshTokenServiceTest {
         assertThrows(ExpiredRefreshTokenException.class, () -> refreshTokenService.verifyExpiration(refreshToken));
         verify(refreshTokenRepository).delete(refreshToken);
     }
+
+    @Test
+    void findByUsername_debeRetornarTokenSiExiste() {
+        // Arrange
+        String username = "testuser";
+        RefreshToken refreshToken = new RefreshToken();
+
+        when(refreshTokenRepository.findByUsername(username)).thenReturn(Optional.of(refreshToken));
+
+        // Act
+        Optional<RefreshToken> result = refreshTokenService.findByUsername(username);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertEquals(refreshToken, result.get());
+        verify(refreshTokenRepository).findByUsername(username);
+    }
 }
