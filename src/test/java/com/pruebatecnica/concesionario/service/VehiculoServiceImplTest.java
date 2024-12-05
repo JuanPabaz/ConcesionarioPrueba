@@ -139,4 +139,20 @@ class VehiculoServiceImplTest {
         assertThrows(ObjectNotFoundException.class, () -> vehiculoService.eliminarVehiculo(1L));
         verify(vehiculoRepository).findById(1L);
     }
+
+    @Test
+    void eliminarVehiculo_debeEliminarVehiculoSiExiste() throws ObjectNotFoundException {
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setPlaca("ABC123");
+
+        when(vehiculoRepository.findById(1L)).thenReturn(Optional.of(vehiculo));
+        when(vehiculoRepository.findByPlaca("ABC123")).thenReturn(Optional.empty());
+
+        boolean result = vehiculoService.eliminarVehiculo(1L);
+
+        assertTrue(result);
+        verify(vehiculoRepository).findById(1L);
+        verify(vehiculoRepository).findByPlaca("ABC123");
+        verify(vehiculoRepository).deleteById(1L);
+    }
 }
