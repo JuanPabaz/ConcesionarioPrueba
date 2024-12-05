@@ -88,4 +88,21 @@ class OrdenServiceImplTest {
         assertEquals("El vehiculo ya tiene una orden activa", exception.getMessage());
     }
 
+    @Test
+    void crearOrden_debeLanzarExcepcionSiFechaOrdenEsFutura() {
+        // Arrange
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setId(1L);
+
+        Orden orden = new Orden();
+        orden.setVehiculo(vehiculo);
+        orden.setFechaOrden(LocalDate.now().plusDays(1));
+
+        when(vehiculoService.buscarVehiculoPorId(1L)).thenReturn(vehiculo);
+
+        // Act & Assert
+        BadCreateRequest exception = assertThrows(BadCreateRequest.class, () -> ordenService.crearOrden(orden));
+        assertEquals("No se puede crear una orden con fecha mayor a la actual:" + LocalDate.now(), exception.getMessage());
+    }
+
 }
