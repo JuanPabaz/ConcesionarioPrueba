@@ -118,4 +118,21 @@ class AuthenticationServiceTest {
         ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () -> authenticationService.generateToken(username));
         assertEquals("Usuario no encontrado", exception.getMessage());
     }
+
+    @Test
+    void generateToken_debeGenerarTokenCorrectamente() throws ObjectNotFoundException {
+        // Arrange
+        String username = "test@example.com";
+        String token = "mocked.jwt.token";
+
+        when(jwtService.generateToken(username)).thenReturn(token);
+
+        // Act
+        String resultado = authenticationService.generateToken(username);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(token, resultado);
+        verify(jwtService).generateToken(username);
+    }
 }
