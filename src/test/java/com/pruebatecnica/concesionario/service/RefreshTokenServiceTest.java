@@ -93,4 +93,18 @@ class RefreshTokenServiceTest {
         verify(refreshTokenRepository).findByToken(token);
     }
 
+    @Test
+    void verifyExpiration_debeRetornarTokenSiNoEstaVencido() {
+        // Arrange
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setExpiryDate(Instant.now().plusMillis(10000));
+
+        // Act
+        RefreshToken result = refreshTokenService.verifyExpiration(refreshToken);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(refreshToken, result);
+    }
+
 }
