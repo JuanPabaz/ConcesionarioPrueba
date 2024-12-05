@@ -148,4 +148,16 @@ class RefreshTokenServiceTest {
         assertTrue(result.isEmpty());
         verify(refreshTokenRepository).findByUsername(username);
     }
+
+    @Test
+    void deleteRefreshToken_debeEliminarToken() {
+        // Arrange
+        RefreshToken refreshToken = new RefreshToken();
+
+        // Act
+        refreshTokenService.DeleteRefreshToken(refreshToken);
+
+        // Assert
+        verify(refreshTokenRepository).delete(refreshToken);
+    }
 }
