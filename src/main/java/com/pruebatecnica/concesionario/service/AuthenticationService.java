@@ -20,20 +20,14 @@ public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final AuthenticationManager authenticationManager;
-
     private final JwtServiceImpl jwtService;
-
-    private final RefreshTokenService refreshTokenService;
 
     private final IMapUsuario mapUsuario;
 
-    public AuthenticationService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtServiceImpl jwtService, RefreshTokenService refreshTokenService, IMapUsuario mapUsuario) {
+    public AuthenticationService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtServiceImpl jwtService, IMapUsuario mapUsuario) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.refreshTokenService = refreshTokenService;
         this.mapUsuario = mapUsuario;
     }
 
