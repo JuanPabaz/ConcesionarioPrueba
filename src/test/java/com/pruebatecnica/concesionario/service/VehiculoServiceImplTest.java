@@ -83,4 +83,22 @@ class VehiculoServiceImplTest {
         verify(vehiculoRepository).findByPlaca("ABC123");
     }
 
+    @Test
+    void crearVehiculo_debeCrearVehiculoSiPlacaNoExiste() {
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setPlaca("ABC123");
+        Vehiculo savedVehiculo = new Vehiculo();
+        VehiculoDTO vehiculoDTO = new VehiculoDTO();
+
+        when(vehiculoRepository.findByPlaca("ABC123")).thenReturn(Optional.empty());
+        when(vehiculoRepository.save(vehiculo)).thenReturn(savedVehiculo);
+        when(mapVehiculo.mapVehiculo(savedVehiculo)).thenReturn(vehiculoDTO);
+
+        VehiculoDTO result = vehiculoService.crearVehiculo(vehiculo);
+
+        assertEquals(vehiculoDTO, result);
+        verify(vehiculoRepository).findByPlaca("ABC123");
+        verify(vehiculoRepository).save(vehiculo);
+        verify(mapVehiculo).mapVehiculo(savedVehiculo);
+    }
 }
