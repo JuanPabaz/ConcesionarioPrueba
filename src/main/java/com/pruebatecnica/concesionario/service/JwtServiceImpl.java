@@ -83,18 +83,6 @@ public class JwtServiceImpl {
         return createToke(claims,username);
     }
 
-    public String decodeToken(String token){
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] parts = token.split("\\.");
-        String payload = new String(decoder.decode(parts[1]));
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            Map claims = mapper.readValue(payload, Map.class);
-            return (String) claims.get("nitEmpresa");
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to parse JWT payload", e);
-        }
-    }
 
     private String createToke(Map<String, Object> claims, String username) {
         return Jwts.builder()
@@ -111,13 +99,4 @@ public class JwtServiceImpl {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Usuario getUsuarioFromAuthorizationHeader(String authorizationHeader) {
-        String token = authorizationHeader.substring(7);
-        String username = extractUsername(token);
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByUsername(username);
-        if (usuarioOptional.isEmpty()){
-            throw new BadUserCredentialsException("El usuario no existe");
-        }
-        return usuarioOptional.get();
-    }
 }
