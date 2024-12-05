@@ -51,4 +51,15 @@ class VehiculoServiceImplTest {
         verify(mapVehiculo).mapVehiculoList(vehiculos);
     }
 
+    @Test
+    void buscarVehiculoPorId_debeRetornarVehiculoSiExiste() {
+        Vehiculo vehiculo = new Vehiculo();
+        when(vehiculoRepository.findById(1L)).thenReturn(Optional.of(vehiculo));
+
+        Vehiculo result = vehiculoService.buscarVehiculoPorId(1L);
+
+        assertEquals(vehiculo, result);
+        verify(vehiculoRepository).findById(1L);
+    }
+
 }
