@@ -157,4 +157,21 @@ class OrdenServiceImplTest {
         assertEquals("No se puede eliminar una orden activa", exception.getMessage());
     }
 
+    @Test
+    void eliminarOrden_debeEliminarOrdenCorrectamente() throws ObjectNotFoundException {
+        // Arrange
+        Orden orden = new Orden();
+        orden.setId(1L);
+        orden.setActiva(false);
+
+        when(ordenRepository.findById(1L)).thenReturn(Optional.of(orden));
+
+        // Act
+        boolean resultado = ordenService.eliminarOrden(1L);
+
+        // Assert
+        assertTrue(resultado);
+        verify(ordenRepository).deleteById(1L);
+    }
+
 }
