@@ -61,4 +61,22 @@ class RefreshTokenServiceTest {
         verify(refreshTokenRepository).save(any(RefreshToken.class));
     }
 
+    @Test
+    void findByToken_debeRetornarRefreshTokenSiExiste() {
+        // Arrange
+        String token = UUID.randomUUID().toString();
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setToken(token);
+
+        when(refreshTokenRepository.findByToken(token)).thenReturn(Optional.of(refreshToken));
+
+        // Act
+        Optional<RefreshToken> result = refreshTokenService.findByToken(token);
+
+        // Assert
+        assertTrue(result.isPresent());
+        assertEquals(token, result.get().getToken());
+        verify(refreshTokenRepository).findByToken(token);
+    }
+
 }
