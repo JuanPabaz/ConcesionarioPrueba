@@ -132,4 +132,15 @@ class OrdenServiceImplTest {
         verify(mapOrden).mapOrden(orden);
     }
 
+
+    @Test
+    void eliminarOrden_debeLanzarExcepcionSiOrdenNoExiste() {
+        // Arrange
+        when(ordenRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () -> ordenService.eliminarOrden(1L));
+        assertEquals("Orden no encontrada", exception.getMessage());
+    }
+
 }
