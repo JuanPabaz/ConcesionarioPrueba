@@ -134,4 +134,18 @@ class RefreshTokenServiceTest {
         assertEquals(refreshToken, result.get());
         verify(refreshTokenRepository).findByUsername(username);
     }
+
+    @Test
+    void findByUsername_debeRetornarOptionalVacioSiNoExiste() {
+        // Arrange
+        String username = "unknownuser";
+        when(refreshTokenRepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        // Act
+        Optional<RefreshToken> result = refreshTokenService.findByUsername(username);
+
+        // Assert
+        assertTrue(result.isEmpty());
+        verify(refreshTokenRepository).findByUsername(username);
+    }
 }
