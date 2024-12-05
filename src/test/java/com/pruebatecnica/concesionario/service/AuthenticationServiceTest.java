@@ -107,4 +107,15 @@ class AuthenticationServiceTest {
         assertEquals(Role.ADMIN, usuario.getRole());
         verify(usuarioRepository).save(usuario);
     }
+
+    @Test
+    void generateToken_debeLanzarExcepcionSiUsuarioNoExiste() throws ObjectNotFoundException {
+        // Arrange
+        String username = "test@example.com";
+        doThrow(new ObjectNotFoundException("Usuario no encontrado")).when(jwtService).generateToken(username);
+
+        // Act & Assert
+        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () -> authenticationService.generateToken(username));
+        assertEquals("Usuario no encontrado", exception.getMessage());
+    }
 }
