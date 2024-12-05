@@ -105,4 +105,31 @@ class OrdenServiceImplTest {
         assertEquals("No se puede crear una orden con fecha mayor a la actual:" + LocalDate.now(), exception.getMessage());
     }
 
+    @Test
+    void crearOrden_debeCrearOrdenCorrectamente() throws BadCreateRequest, ObjectNotFoundException {
+        // Arrange
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setId(1L);
+
+        Orden orden = new Orden();
+        orden.setVehiculo(vehiculo);
+        orden.setFechaOrden(LocalDate.now());
+
+        OrdenDTO ordenDTO = new OrdenDTO();
+
+        when(vehiculoService.buscarVehiculoPorId(1L)).thenReturn(vehiculo);
+        when(ordenRepository.encontrarPorIdVehiculoYOrdenActiva(vehiculo.getId())).thenReturn(Optional.empty());
+        when(ordenRepository.save(orden)).thenReturn(orden);
+        when(mapOrden.mapOrden(orden)).thenReturn(ordenDTO);
+
+        // Act
+        OrdenDTO resultado = ordenService.crearOrden(orden);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(ordenDTO, resultado);
+        verify(ordenRepository).save(orden);
+        verify(mapOrden).mapOrden(orden);
+    }
+
 }
