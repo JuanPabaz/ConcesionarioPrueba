@@ -135,4 +135,21 @@ class AuthenticationServiceTest {
         assertEquals(token, resultado);
         verify(jwtService).generateToken(username);
     }
+
+    @Test
+    void validateToken_debeRetornarClaimsCorrectamente() {
+        // Arrange
+        String token = "mocked.jwt.token";
+        Map<String, Object> claims = Map.of("username", "test@example.com");
+
+        when(jwtService.validateToken(token)).thenReturn(claims);
+
+        // Act
+        Map<String, Object> resultado = authenticationService.validateToken(token);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(claims, resultado);
+        verify(jwtService).validateToken(token);
+    }
 }
