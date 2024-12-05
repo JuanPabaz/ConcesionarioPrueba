@@ -71,4 +71,21 @@ class OrdenServiceImplTest {
         assertEquals("El vehiculo no existe", exception.getMessage());
     }
 
+    @Test
+    void crearOrden_debeLanzarExcepcionSiVehiculoTieneOrdenActiva() {
+        // Arrange
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setId(1L);
+
+        Orden orden = new Orden();
+        orden.setVehiculo(vehiculo);
+
+        when(vehiculoService.buscarVehiculoPorId(1L)).thenReturn(vehiculo);
+        when(ordenRepository.encontrarPorIdVehiculoYOrdenActiva(vehiculo.getId())).thenReturn(Optional.of(List.of(new Orden())));
+
+        // Act & Assert
+        BadCreateRequest exception = assertThrows(BadCreateRequest.class, () -> ordenService.crearOrden(orden));
+        assertEquals("El vehiculo ya tiene una orden activa", exception.getMessage());
+    }
+
 }
