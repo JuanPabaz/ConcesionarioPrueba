@@ -62,4 +62,14 @@ class VehiculoServiceImplTest {
         verify(vehiculoRepository).findById(1L);
     }
 
+    @Test
+    void buscarVehiculoPorId_debeRetornarNullSiNoExiste() {
+        when(vehiculoRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Vehiculo result = vehiculoService.buscarVehiculoPorId(1L);
+
+        assertNull(result);
+        verify(vehiculoRepository).findById(1L);
+    }
+
 }
