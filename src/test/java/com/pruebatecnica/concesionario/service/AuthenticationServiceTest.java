@@ -83,4 +83,28 @@ class AuthenticationServiceTest {
         BadUserCredentialsException exception = assertThrows(BadUserCredentialsException.class, () -> authenticationService.saveUser(usuario));
         assertEquals("El correo no es valido.", exception.getMessage());
     }
+
+    @Test
+    void saveUser_debeGuardarUsuarioCorrectamente() throws BadUserCredentialsException {
+        // Arrange
+        Usuario usuario = new Usuario();
+        usuario.setUsername("test@example.com");
+        usuario.setPassword("Password1");
+
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
+
+        when(usuarioRepository.findByUsername("test@example.com")).thenReturn(Optional.empty());
+        when(passwordEncoder.encode("Password1")).thenReturn("encodedPassword");
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(mapUsuario.mapUsuario(any(Usuario.class))).thenReturn(usuarioResponseDTO);
+
+        // Act
+        UsuarioResponseDTO resultado = authenticationService.saveUser(usuario);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals("encodedPassword", usuario.getPassword());
+        assertEquals(Role.ADMIN, usuario.getRole());
+        verify(usuarioRepository).save(usuario);
+    }
 }
