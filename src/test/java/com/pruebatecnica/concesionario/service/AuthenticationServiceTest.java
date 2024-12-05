@@ -69,4 +69,18 @@ class AuthenticationServiceTest {
         BadUserCredentialsException exception = assertThrows(BadUserCredentialsException.class, () -> authenticationService.saveUser(usuario));
         assertEquals("La contraseña debe tener al menos 6 caracteres y contener al menos una letra y un número.", exception.getMessage());
     }
+
+    @Test
+    void saveUser_debeLanzarExcepcionSiCorreoNoCumpleRegex() {
+        // Arrange
+        Usuario usuario = new Usuario();
+        usuario.setUsername("invalid_email");
+        usuario.setPassword("Password1");
+
+        when(usuarioRepository.findByUsername("invalid_email")).thenReturn(Optional.empty());
+
+        // Act & Assert
+        BadUserCredentialsException exception = assertThrows(BadUserCredentialsException.class, () -> authenticationService.saveUser(usuario));
+        assertEquals("El correo no es valido.", exception.getMessage());
+    }
 }
