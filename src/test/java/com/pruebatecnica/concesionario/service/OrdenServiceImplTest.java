@@ -59,4 +59,16 @@ class OrdenServiceImplTest {
         verify(mapOrden).mapOrdenList(ordenes);
     }
 
+    @Test
+    void crearOrden_debeLanzarExcepcionSiVehiculoNoExiste() {
+        // Arrange
+        Orden orden = new Orden();
+        orden.setVehiculo(new Vehiculo());
+        when(vehiculoService.buscarVehiculoPorId(anyLong())).thenReturn(null);
+
+        // Act & Assert
+        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () -> ordenService.crearOrden(orden));
+        assertEquals("El vehiculo no existe", exception.getMessage());
+    }
+
 }
