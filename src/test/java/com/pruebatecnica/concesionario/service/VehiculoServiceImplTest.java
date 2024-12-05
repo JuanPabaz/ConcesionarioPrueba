@@ -72,4 +72,15 @@ class VehiculoServiceImplTest {
         verify(vehiculoRepository).findById(1L);
     }
 
+    @Test
+    void crearVehiculo_debeLanzarExcepcionSiPlacaYaExiste() {
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setPlaca("ABC123");
+
+        when(vehiculoRepository.findByPlaca("ABC123")).thenReturn(Optional.of(new Vehiculo()));
+
+        assertThrows(BadCreateRequest.class, () -> vehiculoService.crearVehiculo(vehiculo));
+        verify(vehiculoRepository).findByPlaca("ABC123");
+    }
+
 }
